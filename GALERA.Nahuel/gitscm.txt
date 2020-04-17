@@ -1,0 +1,20 @@
+--Terminal--
+cd programacion2
+git clone https://github.com/solojuego1/HolaMundo-2020.git
+ls -la
+cd HolaMundo-2020
+
+
+--VisualStudio--
+print ("HolaMundo")
+
+ctrl shift + P 
+linter (última opción) install flake8
+
+git add .
+git status
+git commit -m "First commit"
+git config user.email "b3rs4k@gmail.com"
+git config user.name "solojuego1"
+git commit -m "First commit"
+git push
