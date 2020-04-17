@@ -1,0 +1,1 @@
+print("El resultado es ", ((3+2)/(2*5))**2)
