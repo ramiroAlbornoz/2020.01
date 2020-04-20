@@ -1,0 +1,5 @@
+while True:
+    a=input("Introduce  algo y si quiere salir pon salir: ")
+    if a == "salir":
+        break
+    print(a)

@@ -1,0 +1,5 @@
+cont="contraseña"
+contraseña=""
+while contraseña!=cont:
+    contraseña=input("Introduce la contraseña:")
+print("Contraseña correcta")
