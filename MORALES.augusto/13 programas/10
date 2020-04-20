@@ -1,0 +1,8 @@
+a=int(input("Introduce un número entero positivo mayor que 2:"))
+i = 2
+while a % i != 0:
+    i += 1
+if i == a:
+    print(str(a) + "\n es primo")
+else:
+    print(str(a) + "\n no es primo")

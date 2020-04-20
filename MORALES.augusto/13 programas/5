@@ -1,0 +1,6 @@
+plata=float(input("¿Cantidad a invertir?"))
+interes=float(input("¿Interés anual?"))
+años=int(input("¿Años?"))
+for i in range(años):
+    plata*=1 + interes / 100 
+    print("Plata en" + str(i+1) + " años: " + str(round(plata, 2)))
