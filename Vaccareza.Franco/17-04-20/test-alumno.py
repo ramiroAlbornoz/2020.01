@@ -12,11 +12,9 @@ class TestAlumno(unittest.TestCase):
         self.assertEqual(persona.__str__(), to_string)
 
     def test_str_alumno(self):
-        alumno = Alumno(8, "Peron", "Juan Domingo", 3, 3.1496)
-        self.assertEqual(alumno.__str__(), "8: Peron, Juan Domingo - Chequera: 3 - Nivel de Facha: 3.1496")
+        alumno = Alumno(8, "Peron", "Juan Domingo", 3, 3.14)
+        self.assertEqual(alumno.__str__(), "8: Peron, Juan Domingo - Chequera: 3 - Nivel de Facha: 3.140000")
 
 
 if __name__ == "__main__":
     unittest.main()
-
-
