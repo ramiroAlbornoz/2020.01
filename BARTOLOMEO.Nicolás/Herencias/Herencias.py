@@ -10,6 +10,9 @@ class Alumno(Persona):
         super().__init__(documento, apellido, nombre)
         self.chequera = chequera
         self.nivel_de_facha = nivel_de_facha
+    #def __str__(self):
+        #super().__str__(documento, apellido, nombre)
+        #return ""
 if __name__ == "__main__":
     persona = Persona(2345, "Horacio", "Rodriguez Larreta")
     print(persona)
