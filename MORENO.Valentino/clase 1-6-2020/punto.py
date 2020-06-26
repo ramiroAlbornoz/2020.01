@@ -6,16 +6,16 @@ class Punto():
     
     @property
     def x (self):
-        return self.__x
+        return self._x
     @property
     def y (self):
-        return self.__y
+        return self._y
     @x.setter 
     def x(self, x):
-        self.__x = x
+        self._x = x
     @y.setter 
     def y(self, y):
-        self.__y = y
+        self._y = y
 
 if __name__ == '__main__':
     print("ola")
