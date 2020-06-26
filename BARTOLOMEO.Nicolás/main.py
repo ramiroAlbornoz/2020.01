@@ -5,7 +5,7 @@ pygame.init()
 hecho = False
 rayo = False
 reloj = pygame.time.Clock()
-
+degree=0
 dimensiones = (626, 417)
 
 pantalla = pygame.display.set_mode(dimensiones)
@@ -49,29 +49,43 @@ while not hecho:
     pantalla.blit(fondo, (0, 0))
 
     if rayo:
-        pygame.draw.line(pantalla, BLANCO, [pos[0], pos[1] - 20], [pos[0], 0], 2)
+        linea = pygame.draw.line(pantalla, BLANCO, [pos[0], pos[1] - 20], [pos[0], 0], 2)
 
     pos_anterior = pos
     pos = pygame.mouse.get_pos()
     pygame.mouse.set_visible(False)
     offset = (pos[0] - 25, pos[1] - 40)
+    
 
-    if pos[0] > pos_anterior[0]:
-        personaje = nave90
+    personaje = nave90
+    
     if pos[0] < pos_anterior[0]:
         personaje = nave270
+        
+
     if pos[1] < pos_anterior[1]:
         personaje = nave
+        
+            
     if pos[1] > pos_anterior[1]:
         personaje = nave180
+        
+
     if pos[0] > pos_anterior[0] and pos[1] < pos_anterior[1]:
         personaje = nave45
+        
+
     if pos[0] > pos_anterior[0] and pos[1] > pos_anterior[1]:
         personaje = nave135
+        
+            
     if pos[0] < pos_anterior[0] and pos[1] > pos_anterior[1]:
         personaje = nave225
+
+
     if pos[0] < pos_anterior[0] and pos[1] < pos_anterior[1]:
         personaje = nave315
+       
     
     pantalla.blit(personaje, offset)
 
