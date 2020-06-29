@@ -1,110 +1,107 @@
 import pygame
-
-pygame.init()
-
-hecho = False
-rayo = False
-reloj = pygame.time.Clock()
-
-dimensiones = (626, 417)
-
-pantalla = pygame.display.set_mode(dimensiones)
-pygame.display.set_caption("Programacion 2")
-
+import random
+ 
+# Definimos algunos colores
 NEGRO = (0, 0, 0)
 BLANCO = (255, 255, 255)
 ROJO = (255, 0, 0)
-AZUL = (0, 0, 255)
-VERDE = (0, 255, 0)
-
-fondo = pygame.image.load('fondo.jpg').convert()
-nave = pygame.image.load('nave.png').convert()
-nave.set_colorkey(NEGRO)
-nave45 = pygame.image.load('nave45.png').convert()
-nave45.set_colorkey(NEGRO)
-nave90 = pygame.image.load('nave90.png').convert()
-nave90.set_colorkey(NEGRO)
-nave135 = pygame.image.load('nave135.png').convert()
-nave135.set_colorkey(NEGRO)
-nave180 = pygame.image.load('nave180.png').convert()
-nave180.set_colorkey(NEGRO)
-nave225 = pygame.image.load('nave225.png').convert()
-nave225.set_colorkey(NEGRO)
-nave270 = pygame.image.load('nave270.png').convert()
-nave270.set_colorkey(NEGRO)
-nave315 = pygame.image.load('nave315.png').convert()
-nave315.set_colorkey(NEGRO)
-
-personaje = nave
-
-pos = [300, 200]
-pos_anterior = pos
-salto_x = 0
-salto_y = 0
-
+ 
+class Bloque(pygame.sprite.Sprite):
+    """
+    Esta clase representa la pelota        
+    Deriva de la clase "Sprite" en Pygame
+    """
+     
+    def __init__(self, color, largo, alto, imagen):
+        """ Constructor. Pasa el color al bloque, 
+        y su posición x e y """
+         
+        # Llama al constructor de la clase padre (Sprite) 
+        super().__init__() 
+ 
+        # Crea una imagen del bloque y lo rellena de color.
+        # Esto podría ser también una imagen cargada desde el disco duro.
+        self.image = pygame.image.load(imagen).convert()
+        self.image.set_colorkey(BLANCO)
+ 
+        # Obtenemos el objeto rectángulo que posee las dimensiones de la imagen
+        # Actualizamos la posición de ese objeto estableciendo los valores para 
+        # rect.x y rect.y
+        self.rect = self.image.get_rect()
+ 
+# Inicializamos Pygame
+pygame.init()
+ 
+# Establecemos el alto y largo de la pantalla
+pantalla_largo = 1000
+pantalla_alto = 600
+pantalla=pygame.display.set_mode([pantalla_largo,pantalla_alto])
+ 
+# Esta es una lista de 'sprites.' Cada bloque en el programa es
+# añadido a la lista. La lista es gestionada por una clase llamada 'Group.'
+bloque_lista = pygame.sprite.Group()
+ 
+# Esta es una lista de cada uno de los sprites. Así como del resto de bloques y el bloque protagonista..
+listade_todoslos_sprites = pygame.sprite.Group()
+ 
+for i in range(50):
+    # Esto representa un bloque
+    bloque = Bloque(NEGRO, 20, 15, 'nico.gif')
+ 
+    # Establecemos una ubicación aleatoria para el bloque
+    bloque.rect.x = random.randrange(pantalla_largo-10)
+    bloque.rect.y = random.randrange(pantalla_alto-10)
+     
+    # Añadimos el  bloque a la lista de objetos
+    bloque_lista.add(bloque)
+    listade_todoslos_sprites.add(bloque)
+ 
+# Creamos un bloque protagonista ROJO
+protagonista = Bloque(ROJO, 20, 15, 'anger.gif')
+listade_todoslos_sprites.add(protagonista)
+ 
+#Iteramos hasta que el usuario pulse el botón de salida
+hecho = False
+ 
+#  Se usa para establecer cuan rápido se actualiza la pantalla
+reloj = pygame.time.Clock()
+ 
+marcador = 0
+ 
+# -------- Bucle principal del Programa -----------
 while not hecho:
-    for evento in pygame.event.get(): 
-        if evento.type == pygame.QUIT:  
-            hecho = True
-        if evento.type == pygame.KEYDOWN:
-            if evento.key == pygame.K_UP:
-                salto_y = -2
-                personaje = nave
-            if evento.key == pygame.K_DOWN:
-                salto_y = 2
-                personaje = nave180
-            if evento.key == pygame.K_LEFT:
-                salto_x = -2
-                personaje = nave270
-            if evento.key == pygame.K_RIGHT:
-                salto_x = 2
-                personaje = nave90
-            if evento.key == pygame.K_SPACE:
-                rayo = True
-
-        if evento.type == pygame.KEYUP:
-            if evento.key == pygame.K_UP:
-                tecla_anterior = 0
-                salto_y = 0
-            if evento.key == pygame.K_DOWN:
-                salto_y = 0
-            if evento.key == pygame.K_LEFT:
-                salto_x = 0
-            if evento.key == pygame.K_RIGHT:
-                salto_x = 0
-            if evento.key == pygame.K_SPACE:
-                rayo = False
-
-    pantalla.fill(NEGRO)
-    pantalla.blit(fondo, (0, 0))
-
-    if rayo:
-        if personaje == nave:
-            pygame.draw.line(pantalla, BLANCO, [pos[0], pos[1] - 20], [pos[0], 0], 2)
-        if personaje == nave180:
-            pygame.draw.line(pantalla, ROJO, [pos[0], pos[1] - 20], [pos[0], 500], 2)
-        if personaje == nave90:
-            pygame.draw.line(pantalla, AZUL, [pos[0], pos[1] - 17], [700, pos[1] - 17], 2)
-        if personaje == nave270:
-            pygame.draw.line(pantalla, VERDE, [pos[0], pos[1] - 17], [0, pos[1] - 17], 2)
-
-    pygame.mouse.set_visible(False)
-    offset = (pos[0] - 25, pos[1] - 40)
-    pos[0] += salto_x
-    pos[1] += salto_y
-
-    if pos[0] > pos_anterior[0]:
-        personaje = nave90
-    if pos[0] < pos_anterior[0]:
-        personaje = nave270
-    if pos[1] < pos_anterior[1]:
-        personaje = nave
-    if pos[1] > pos_anterior[1]:
-        personaje = nave180
-    
-    pantalla.blit(personaje, offset)
-
-    pygame.display.flip()
+    for evento in pygame.event.get(): # El usuario hizo algo
+        if evento.type == pygame.QUIT: # Si el usuario pulsó salir
+            hecho = True # Marcamos que hemos terminado y salimos del bucle
+ 
+    # Limpiamos la pantalla
+    pantalla.fill(BLANCO)
+ 
+    # Obtenemos la posición actual del ratón. Esto devuelve la posición
+    # como una lista de dos números.
+    pos = pygame.mouse.get_pos()
+     
+    # Extraemos la x e y de la lista, 
+    # Tal como si extrajéramos letras de una cadena de texto.
+    # Colocamos al objeto protagonista en la ubicación del ratón.
+    protagonista.rect.x = pos[0]
+    protagonista.rect.y = pos[1]
+     
+    # Observamos si el bloque protagonista ha colisionado con algo.
+    lista_impactos_bloques = pygame.sprite.spritecollide(protagonista, bloque_lista, True)  
+     
+    # Comprobamos la lista de colisiones
+    for bloque in lista_impactos_bloques:
+        marcador += 1
+        print( marcador )
+         
+    # Dibujamos todos los sprites
+    listade_todoslos_sprites.draw(pantalla)
+     
+    # Limitamos a 60 fotogramas por segundo
     reloj.tick(60)
-
+ 
+    # Avanzamos y actualizamos la pantalla con lo que hemos dibujado.
+    pygame.display.flip()
+ 
 pygame.quit()
